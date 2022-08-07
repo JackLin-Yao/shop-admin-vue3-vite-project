@@ -21,6 +21,7 @@
           :model="loginFrom"
           class="w-[250px]"
         >
+          <!-- Account form item-->
           <!-- prop	model 的键名。 它可以是一个路径数组(例如 ['a', 'b', 0])。 在定义了 validate、resetFields 的方法时，该属性是必填的 -->
           <el-form-item prop="username">
             <el-input placeholder="请输入账号" v-model="loginFrom.username">
@@ -30,6 +31,7 @@
               </template>
             </el-input>
           </el-form-item>
+          <!-- Password table item -->
           <el-form-item prop="password">
             <el-input
               type="password"
@@ -40,6 +42,7 @@
                 <el-icon><lock /></el-icon> </template
             ></el-input>
           </el-form-item>
+          <!-- Submit button item-->
           <el-form-item>
             <!-- loading	是否为加载中状态 -->
             <el-button
@@ -58,7 +61,19 @@
 </template>
 
 <script setup>
+// import { log } from 'console'
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
+import { login } from '@/api/manager'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { toast } from '@/composables/utils'
+import { getinfo } from '@/api/manager'
+import { setToken } from '@/composables/auth'
+
+const store = useStore()
+
+const router = useRouter()
+// import { loginStore } from '../store/login.js'
 const loginFrom = reactive({
   username: '',
   password: '',
@@ -75,7 +90,7 @@ const loginRules = {
   password: [
     {
       required: true,
-      message: '用户名不能为空',
+      message: '密码不能为空',
       trigger: 'blur',
     },
   ],
@@ -84,18 +99,47 @@ const loginRules = {
 const formRef = ref(null)
 const loading = ref(false) //// 登录的loding状态
 const onSubmit = () => {
-  // 触发表单验证 validate是异步
   formRef.value.validate((valid) => {
     if (!valid) {
-      console.log(valid)
       return false
     }
-    // 开启loading
     loading.value = true
-    console.log(loading.value)
-    // 验证通过
+    login(loginFrom.username, loginFrom.password)
+      .then((res) => {
+        // console.log(res.token)
+        toast('登陆成功')
+        setToken(res.data.data.token)
+        // console.log('res.token:----', res.token)
+        // getinfo().then((res2) => {
+        //   // console.log('getinfo请求失败')
+        //   console.log(store)
+        //   store.commit('SET_USERINFO', res2)
+        //   // console.log('res2的值', res2)
+        //   // console.log('NotFound------404')
+        // })
+        router.push('/')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        loading.value = false
+      })
   })
 }
+// const onSubmit = () => {
+//   formRef.value.validate((valid) => {
+//     if (!valid) {
+//       return false
+//     }
+//     loading.value = true
+//     let abb = login(loginFrom.username, loginFrom.password).then((res) => {
+//       console.log(res)
+//       toast('登陆成功')
+
+//     })
+//   })
+// }
 
 // 监听回车事件
 function onKeyUp(e) {
