@@ -15,6 +15,8 @@
           <span class="line"></span>
         </div>
         <!-- rules	表单验证规则 model	表单数据对象 -->
+        <!-- ref 属性涉及Dom 元素的获取(el-form表单对象)。我们首先需要了解下javasrcipt 是如何获取Dom 元素是通过：document.querySelector（".input"）获取dom元素节点 。Vue 为简化DOM获取方法提出了ref 属性和$refs 对象。一般的操作流程是:ref 绑定控件，$refs 获取控件。 -->
+
         <el-form
           ref="formRef"
           :rules="loginRules"
@@ -108,7 +110,7 @@ const onSubmit = () => {
       .then((res) => {
         // console.log(res.token)
         toast('登陆成功')
-        setToken(res.data.data.token)
+        setToken(res.token)
         // console.log('res.token:----', res.token)
         // getinfo().then((res2) => {
         //   // console.log('getinfo请求失败')
@@ -118,9 +120,6 @@ const onSubmit = () => {
         //   // console.log('NotFound------404')
         // })
         router.push('/')
-      })
-      .catch((err) => {
-        console.log(err)
       })
       .finally(() => {
         loading.value = false

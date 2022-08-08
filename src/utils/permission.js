@@ -1,9 +1,9 @@
-import { router } from '@/routers/index.js'
+import { router ,addRoutes} from '@/routers/index.js'
 import { getToken } from '@/composables/auth'
 import { toast, showFullLoading, hideFullLoading } from '@/composables/utils'
 import store from '@/store/index.js'
 // 全局前置导航守卫，路径变化会先走这一步先，类似于拦截器
-
+let hasGetInfo = false
 router.beforeEach(async (to, from, next) => {
   // console.log('前置守卫')
   // console.log(to, from)
@@ -23,14 +23,20 @@ router.beforeEach(async (to, from, next) => {
 
   // 如果用户登录了，自动获取用户信息，并存储在vuex当中
   //解决刷新后页面的用户信息就木有了的问题
-  if (token) {
-    await store.dispatch('getinfo')
+  let hasNewRoutes = false
+  if (token && !hasGetInfo) {
+    let { menus } = await store.dispatch('getinfo')
+    hasGetInfo = true
+    // 动态添加路由
+    hasNewRoutes = addRoutes(menus)
   }
 
   // 设置页面标题
   let title = (to.meta.title ? to.meta.title : '') + '-商城后台管理系统'
   document.title = title
-  next()
+
+
+   hasNewRoutes ? next(to.fullPath) : next()
 })
 
 // 全局后置守卫：页面渲染完发生的动作，它们对于分析、更改页面标题、声明页面等辅助功能以及许多其他事情都很有用

@@ -23,3 +23,7 @@ export function getinfo() {
 export function logout() {
   return service.post('/admin/logout')
 }
+
+export function updatepassword(data) {
+  return service.post('/admin/updatepassword', data)
+}

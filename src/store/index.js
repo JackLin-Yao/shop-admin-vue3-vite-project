@@ -7,6 +7,9 @@ const store = createStore({
     return {
       // 用户信息
       user: {},
+      asideWidth: '250px',
+      menus: [],
+      ruleNames: [],
     }
   },
   actions: {
@@ -17,12 +20,14 @@ const store = createStore({
         getinfo()
           .then((res) => {
             commit('SET_USERINFO', res)
+            commit('SET_MENUS', res.menus)
+            commit('SET_RULENAMES', res.ruleNames)
             resolve(res)
           })
           .catch((err) => {})
       })
     },
-    logout({ commit}) {
+    logout({ commit }) {
       // 清除cookie里面的Token
       removeToken()
       // 清除用户的用户状态  vuex
@@ -37,6 +42,16 @@ const store = createStore({
     // 记录用户信息
     SET_USERINFO(state, user) {
       state.user = user
+    },
+    // 展开/缩起侧边
+    handleAsideWidth(state) {
+      state.asideWidth = state.asideWidth == '250px' ? '64px' : '250px'
+    },
+    SET_MENUS(state, menus) {
+      state.menus = menus
+    },
+    SET_RULENAMES(state, ruleNames) {
+      state.ruleNames = ruleNames
     },
   },
 })

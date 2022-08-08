@@ -3,7 +3,7 @@
   <el-container>
     <el-header><Header /></el-header>
     <el-container>
-      <el-aside><Menu /></el-aside>
+      <el-aside :width="$store.state.asideWidth"><Menu /></el-aside>
       <el-main> <Taglist /><router-view></router-view></el-main
     ></el-container>
   </el-container>
@@ -15,4 +15,8 @@ import Menu from './modules/layoutMenu.vue'
 import Taglist from './modules/layoutTaglist.vue'
 </script>
 
-<style lang="scss" scoped></style>
+<style  scoped>
+.el-aside {
+  transition: all 0.2s;
+}
+</style>
