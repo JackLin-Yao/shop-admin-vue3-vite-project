@@ -89,14 +89,13 @@ const defaultActive = ref(route.path)
 
 <style scoped>
 .f-menu {
-  transition：all 0.2s;
-  /* weight: 15.625rem; */
-  top: 4rem;
+  transition: all 0.2s;
+  top: 64px;
   bottom: 0;
   left: 0;
   overflow-y: auto;
-  overflow-x:hidden;
-  @apply shadow-md fixed;
+  overflow-x: hidden;
+  @apply shadow-md fixed bg-light-50;
 }
 .f-menu::-webkit-scrollbar {
   width: 0px;

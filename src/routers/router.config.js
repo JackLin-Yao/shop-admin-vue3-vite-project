@@ -6,17 +6,19 @@
 import NotFound from '@/views/NotFound.vue'
 // import Index from '@/views/index.vue'
 // import GoodList from '@/views/goods/list.vue'
+import Layout from '@/layout/index.vue'
+import Login from '@/views/login.vue'
 
 // 默认路由，所有用户共享
 const routes = [
   {
     path: '/',
     name: 'layout',
-    component: () => import('@/layout/index.vue'),
+    component: Layout,
   },
   {
     path: '/login',
-  component: () => import('@/views/login.vue'),
+    component: Login,
     meta: {
       title: '登录页',
     },
@@ -27,10 +29,5 @@ const routes = [
     component: NotFound,
   },
 ]
-
-
-
-
-
 
 export default routes
