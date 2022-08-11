@@ -15,4 +15,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 app.use(store)
+// 自定义指令
+import permission from '@/directives/permission.js'
+app.use(permission)
 app.mount('#app')

@@ -264,6 +264,7 @@ const handleRefresh = () => location.reload()
 .layout-header {
   @apply flex  items-center  bg-indigo-700 text-light-200 fixed top-0 left-0 right-0;
   height: 64px;
+  z-index: 1000;
 }
 .logo {
   width: 250px;

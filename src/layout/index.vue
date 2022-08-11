@@ -21,6 +21,12 @@ import Taglist from './modules/layoutTagList.vue'
 </script>
 
 <style scoped>
+.el-container {
+  height: 100vh;
+}
+.el-main {
+  @apply bg-gray-100;
+}
 .el-aside {
   transition: all 0.2s;
 }
@@ -43,5 +49,9 @@ import Taglist from './modules/layoutTagList.vue'
 }
 .fade-enter-active {
   transition-delay: 0.3s;
+}
+
+body {
+  @apply bg-gray-100;
 }
 </style>

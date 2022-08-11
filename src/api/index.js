@@ -1,0 +1,13 @@
+import service from '@/utils/server'
+// 后台首页统计1
+export function getStatistics1() {
+  return service.get('/admin/statistics1')
+}
+// 后台首页统计2
+export function getStatistics2() {
+  return service.get('/admin/statistics2')
+}
+// 后台首页统计3
+export function getStatistics3(type) {
+  return service.get('/admin/statistics3?type=' + type)
+}
